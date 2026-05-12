@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Filament\Resources\HomePages\Pages;
+
+use App\Filament\Resources\HomePages\HomePageResource;
+use Filament\Actions\CreateAction;
+use Filament\Resources\Pages\ListRecords;
+
+class ListHomePages extends ListRecords
+{
+    protected static string $resource = HomePageResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            CreateAction::make(),
+        ];
+    }
+        public function mount(): void
+{
+    $record = static::getResource()::getModel()::first();
+
+    if ($record) {
+        redirect(static::getResource()::getUrl('edit', ['record' => $record->id]));
+    }
+}
+}
